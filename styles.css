@@ -618,8 +618,17 @@ section:nth-child(even) {
   font-size: 1.0625rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.project-course {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  margin-top: 2px;
 }
 
 .project-desc {
@@ -668,12 +677,6 @@ section:nth-child(even) {
 /* ========================================
    Gallery Section
    ======================================== */
-#gallery .section-inner {
-  max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-}
-
 .gallery-header {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -717,43 +720,41 @@ section:nth-child(even) {
   text-align: center;
 }
 
-.gallery-scroll-wrapper {
-  overflow: hidden;
-}
-
 .gallery-scroll {
   display: flex;
   gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-strong) transparent;
+  scrollbar-width: none;
   padding: 0 24px;
 }
 
-@media (min-width: 768px) {
-  .gallery-scroll-wrapper {
-    margin: 0 calc(-1 * ((100vw - var(--max-width)) / 2));
-  }
-
-  .gallery-scroll {
-    padding: 0;
-  }
-}
-
 .gallery-scroll::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  display: none;
 }
 
-.gallery-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
+@media (min-width: 768px) {
+  .gallery-scroll {
+    margin: 0 calc(-1 * ((100vw - var(--max-width)) / 2));
+    padding: 0 32px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
 
-.gallery-scroll::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 3px;
+  .gallery-scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .gallery-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .gallery-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 3px;
+  }
 }
 
 .gallery-item {
