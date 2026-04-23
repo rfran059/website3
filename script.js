@@ -86,7 +86,8 @@
   var counter = document.getElementById('gallery-counter');
 
   if (gallery && prevBtn && nextBtn && counter) {
-    var itemWidth = gallery.querySelector('.gallery-item').offsetWidth + 16;
+    var firstItem = gallery.querySelector('.gallery-item');
+    var itemWidth = firstItem.offsetWidth + 16;
 
     prevBtn.addEventListener('click', function() {
       gallery.scrollBy({ left: -itemWidth, behavior: 'smooth' });
@@ -105,7 +106,7 @@
             var total = gallery.children.length;
             if (current < 1) current = 1;
             if (current > total) current = total;
-            counter.textContent = current + ' / ' + total;
+            counter.textContent = 'Showing ' + current + '–' + Math.min(current + 2, total) + ' of ' + total;
             ticking = false;
           });
           ticking = true;
@@ -117,6 +118,60 @@
 
     // Initial counter set
     updateCounter();
+  }
+
+  // == Project Modal ==
+  var modal = document.getElementById('project-modal');
+  var modalBackdrop = modal ? modal.querySelector('.project-modal-backdrop') : null;
+  var modalClose = modal ? modal.querySelector('.project-modal-close') : null;
+  var modalTitle = modal ? modal.querySelector('.project-modal-title') : null;
+  var modalDesc = modal ? modal.querySelector('.project-modal-desc') : null;
+  var modalTags = modal ? modal.querySelector('.project-modal-tags') : null;
+
+  if (modal) {
+    var openModal = function(card) {
+      var full = card.getAttribute('data-full');
+      var tagsStr = card.getAttribute('data-tags');
+      var title = card.querySelector('.project-title').textContent;
+
+      if (modalTitle) modalTitle.textContent = title;
+      if (modalDesc) modalDesc.textContent = full;
+      if (modalTags) {
+        while (modalTags.firstChild) {
+          modalTags.removeChild(modalTags.firstChild);
+        }
+        if (tagsStr) {
+          tagsStr.split('|').forEach(function(tag) {
+            var span = document.createElement('span');
+            span.className = 'tag';
+            span.textContent = tag;
+            modalTags.appendChild(span);
+          });
+        }
+      }
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    var closeModal = function() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('.project-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        openModal(card);
+      });
+    });
+
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
   }
 
   // == Mobile Menu Toggle ==
