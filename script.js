@@ -127,15 +127,24 @@
   var modalTitle = modal ? modal.querySelector('.project-modal-title') : null;
   var modalDesc = modal ? modal.querySelector('.project-modal-desc') : null;
   var modalTags = modal ? modal.querySelector('.project-modal-tags') : null;
+  var modalImage = modal ? modal.querySelector('.project-modal-image') : null;
 
   if (modal) {
     var openModal = function(card) {
       var full = card.getAttribute('data-full');
       var tagsStr = card.getAttribute('data-tags');
       var title = card.querySelector('.project-title').textContent;
+      var imgEl = card.querySelector('.project-image');
+      var imgClass = imgEl ? imgEl.className.match(/project-img-\w+/) : null;
 
       if (modalTitle) modalTitle.textContent = title;
       if (modalDesc) modalDesc.textContent = full;
+      if (modalImage) {
+        modalImage.className = 'project-modal-image';
+        if (imgClass && imgClass[0]) {
+          modalImage.classList.add(imgClass[0]);
+        }
+      }
       if (modalTags) {
         while (modalTags.firstChild) {
           modalTags.removeChild(modalTags.firstChild);
